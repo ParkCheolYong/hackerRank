@@ -1,0 +1,12 @@
+SELECT MIN(CASE WHEN OCCUPATION = 'Doctor' THEN NAME END)    AS Doctor
+     , MIN(CASE WHEN OCCUPATION = 'Professor' THEN NAME END) AS Professor
+     , MIN(CASE WHEN OCCUPATION = 'Singer' THEN NAME END)    AS Singer
+     , MIN(CASE WHEN OCCUPATION = 'Actor' THEN NAME END)     AS Actor
+  FROM (
+        SELECT OCCUPATION
+             , NAME
+             , ROW_NUMBER() OVER(PARTITION BY OCCUPATION ORDER BY NAME) RN
+          FROM OCCUPATIONS
+       ) A
+ GROUP BY RN;       
+  
