@@ -1,0 +1,6 @@
+SELECT FORMAT(ROUND(AVG(A.LAT_N),4),"##0.####")
+  FROM (SELECT LAT_N
+             , ROW_NUMBER() OVER(ORDER BY LAT_N) AS RN
+             , COUNT(*) OVER() + 1               AS CNT
+          FROM STATION) A
+ WHERE A.RN BETWEEN FLOOR(A.CNT / 2) AND CEILING(A.CNT / 2);
