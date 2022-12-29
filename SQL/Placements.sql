@@ -1,0 +1,9 @@
+SELECT B.NAME
+  FROM (SELECT ID
+             , (SELECT Salary FROM Packages WHERE ID = A.ID) AS SALARY
+             , (SELECT Salary FROM Packages WHERE ID = A.Friend_ID) AS FRIEND_SALARY
+          FROM Friends A) A
+       INNER JOIN STUDENTS B ON B.ID = A.ID
+ WHERE A.SALARY < A.FRIEND_SALARY
+ ORDER BY 
+       A.FRIEND_SALARY;
